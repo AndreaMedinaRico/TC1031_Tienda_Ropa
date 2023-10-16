@@ -9,6 +9,8 @@ Complejidad de ordenamiento: 0(n log(n) )
 Esta complejidad se debe a que el algoritmo divide el arreglo cada vez a la mitad y va ordenando las mitades que generó. Este proceso, conforme pasa el tiempo, permite que el arreglo sea ordenado más rápido que si fuera solo lineal. Esta parte se representa con el log(n). Sin embargo, el código no sólo se va dividiendo, sino que también une las partes divididas en un solo arreglo en una complejidad 0(n).
 
 ### Análisis de Complejidad correcto para estructuras de datos
+Complejidad: 0(n) / 0(n/2)
+La complejidad varía dependiendo de la función, ya que en algunas simplemente recorre toda la lista, por lo que su complejidad es de n. En otras, logra bajar la complejidad a n/2 ya que se recorre el doble de rápido, empezando un recorrido por su head y otro por su tail. 
 
 ## SICT0302: Toma de Decisiones
 ### Algoritmo de Ordenamiento
