@@ -1,13 +1,14 @@
 /*
-* Main
-* Por: Andrea Medina Rico
+* main.cpp
+* By: Andrea Medina Rico
 * A01705541
-* 18/09/2023
-* versión: 1
-* Interacción con usuario
+* 14.10.23
+* version: 2
+* Interactive menu with user
 */
 
 #include "Sort.h"
+#include "Archivo.h"
 
 int main() {
     // Creación objetos PRUEBA
@@ -17,10 +18,16 @@ int main() {
     ropa.push_back(Ropa(003, "verde", "algodon", "playera", 200, 'M'));
 
     Sort<Ropa> sort;
+    Archivo archivo("ropa.txt");
 
-    // Variable MENÚ
+    // Create double linked list
+    DList<Ropa> listaRopa;
+    archivo.leer(listaRopa);
+    
+
+    // MENU variable
     int opcion = 0;
-    // MENÚ
+    // MENU
     while (opcion == 0) {
 
         std::cout << "¡BIENVENIDX A LA TIENDA DE ROPA!" << std::endl;

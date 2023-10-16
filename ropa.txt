@@ -1,0 +1,3 @@
+001,rojo,algodon,playera,190,M
+002,azul,poliester,playera,170,M
+003,verde,algodon,playera,200,M

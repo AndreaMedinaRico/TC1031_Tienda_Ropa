@@ -50,6 +50,14 @@ class Ropa {
             std::cout << "Talla: "; std::cin >> talla; 
         }
 
+        // Setters para archivo 
+        void set_codigo(int cod) { codigo = cod; };
+        void set_color(std::string col) { color = col; };
+        void set_tela(std::string tel) { tela = tel; };
+        void set_tipo(std::string tip) { tipo = tip; };
+        void set_precio(int pre) { precio = pre; };
+        void set_talla(char tal) { talla = tal; };
+
         void imprimir();
         void crear() {
             setCodigo();
