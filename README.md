@@ -29,3 +29,4 @@ El programa tiene la opción de ordenas artículos de ropa por precio.
 Los artículos de ropa están registrados en el archivo ropaRead.txt
 
 ### Mecanismo de escritura de archivos para guardar datos de la estructura
+Los artículos de ropa se registran en el archivo ropaWrite.txt
