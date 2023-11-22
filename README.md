@@ -1,7 +1,7 @@
 # TC1031_Tienda_Ropa
 
 ## Manejadora de artículos de ropa de una tienda
-Este proyecto busca que el usuario pueda ordenar artículos de ropa de acuerdo a sus atributos. Por ahora, puede ordenarse de acuerdo al precio. 
+Este proyecto busca que el usuario pueda ordenar artículos de ropa de acuerdo a su precio. 
 
 ## SICT0301: Evalúa los componentes
 ### Análisis de Complejidad correcto para algoritmo de ordenamiento
