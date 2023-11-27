@@ -2,28 +2,33 @@
 * main.cpp
 * By: Andrea Medina Rico
 * A01705541
-* 14.10.23
-* version: 2
+* 11.10.23
+* version: 4
 * Interactive menu with user
 */
 
+#include "doublelist.h"
 #include "Sort.h"
-#include "Archivo.h"
+#include "archivo.h"
+#include <iostream>
+#include <string>
 
 int main() {
-    // Creación objetos PRUEBA
-    std::vector<Ropa> ropa;
-    ropa.push_back(Ropa(001, "rojo", "algodon", "playera", 190, 'M'));
-    ropa.push_back(Ropa(002, "azul", "poliester", "playera", 170, 'M'));
-    ropa.push_back(Ropa(003, "verde", "algodon", "playera", 200, 'M'));
+    DList<int> list;
+    DList<int> prueba;
+    Sort<int> sort;
 
-    Sort<Ropa> sort;
-    Archivo archivo("ropa.txt");
+    // Prueba
+    prueba.add(5);
+    prueba.add(3);
+    prueba.add(1);
 
-    // Create double linked list
-    DList<Ropa> listaRopa;
-    archivo.leer(listaRopa);
-    
+    Archivo archivoR("ropaRead.txt");
+    Archivo archivoW("ropaWrite.txt");
+
+    archivoR.read(list);
+    archivoW.write(list);
+    archivoW.write(prueba);
 
     // MENU variable
     int opcion = 0;
@@ -34,36 +39,32 @@ int main() {
         std::cout << "¿Que deseas hacer?" << std::endl;
         std::cout << "1. Ver catalogo" << std::endl
                 << "2. Ordenar por precio" << std::endl
-                << "3. Agregar articulo" << std::endl;
+                << "3. Agregar precio " << std::endl;
+
         
         std::cin >> opcion;
 
         //      1. Ver catálogo
         if (opcion == 1) {
             std::cout << "Articulos actuales: " << std::endl;
-            for (int i = 0; i < ropa.size(); i++) {
-                std::cout << i + 1 << ": " << std::endl;
-                ropa[i].imprimir();
-            }
+            std::cout << list.toString();
+            std::cout << prueba.toString();
 
         //      2. Ordenar por precio
         } else if (opcion == 2) {
-            std::vector<Ropa> ropaOrdenada = sort.mergeSort(ropa);
-
-            for (int i = 0; i < ropaOrdenada.size(); i++) {
-                std::cout << i + 1 << ": " << std::endl;
-                ropaOrdenada[i].imprimir();
-            }
+            DList<int> ropaOrdenada = sort.selectionSort(list);
+            ropaOrdenada.toString();
 
         //      3. Agregar artículo
         } else if (opcion == 3) {
-            Ropa nueva;
-            nueva.crear();
-            ropa.push_back(nueva);
+            int valor;
+            std::cin >> valor;
+            list.add(valor);
         }
 
         std::cout << "\n Si deseas regresar al menu, ingresa 0 \n";
+        std::cout << "Si deseas salir, ingresa cualquier otro numero \n";
         std::cin >> opcion;
     }
-    std::cout << " \n ¡}Regresa pronto!" << std::endl;
+    std::cout << " \n ¡Regresa pronto!" << std::endl;
 }

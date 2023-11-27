@@ -15,6 +15,8 @@
 #include <ostream>
 
 template <class T> class DList;
+template <class T> class Sort;
+class Archivo;
 
 template <class T>
 class DLink {
@@ -28,17 +30,18 @@ class DLink {
         DLink<T> *next;
 
         friend class DList<T>;
+        friend class Archivo;
+        friend class Sort<T>;
 };
 
 template <class T>
-DLink<T>::DLink(T val) : value(val), previous(0), next(0) {}
+DLink<T>::DLink(T val) : value(val), previous(0), next(0) {};
 
 template <class T>
-DLink<T>::DLink(T val, DLink *prev, DLink* nxt) : value(val), previous(prev), next(nxt) {}
+DLink<T>::DLink(T val, DLink *prev, DLink* nxt) : value(val), previous(prev), next(nxt) {};
 
 template <class T>
-DLink<T>::DLink(const DLink<T> &source) : value(source.value), previous(source.previous), next(source.next) {}
-
+DLink<T>::DLink(const DLink<T> &source) : value(source.value), previous(source.previous), next(source.next) {};
 
 template <class T>
 class DList {
@@ -47,10 +50,12 @@ class DList {
         DLink<T> *tail;
         int size;
 
+        friend class Archivo;
+
     public:
         DList();
-        DList(const DList<T>&);
-        ~DList();       // Destructor
+        DList(const DList<T> &);
+        ~DList();               // Destructor
 
         void clear();
         bool empty();
@@ -65,6 +70,10 @@ class DList {
         void remove(T);
 
         std::string toString() const;
+
+        void swap(DLink<T>*, DLink<T>*);
+
+        friend class Sort<T>;
 };
 
 template <class T>
@@ -101,7 +110,7 @@ void DList<T>::clear() {
     size = 0;
 }
 
-template <class T> 
+template <class T>
 bool DList<T>::empty() {
     return size == 0;
 }
@@ -147,7 +156,7 @@ void DList<T>::add(T val)  {
     size++;
 }
 
-template <class T> 
+template <class T>
 int DList<T>::find(T val) const {
     int pos = 0;
     int pos2 = size;
@@ -236,11 +245,69 @@ void DList<T>::remove(T val) {
 
 template <class T>
 std::string DList<T>::toString() const {
-	std::stringstream aux;
-	DLink<T> *p;
+	std::stringstream ss;
+        DLink<T>* temp = head;
+        while (temp) {
+            T val = temp->value;
+            ss << val << " ";
+            temp = temp->next;
+        }
+        return ss.str();
+}
 
-	p = head;
-	return aux.str();
+template <class T>
+void DList<T>::swap(DLink<T> *a, DLink<T> *b) {
+    // CASE 1: a and b are the same
+    if (a == b)
+        return;
+        
+    // CASE 2: There is no a or b
+    if (a == 0 || b == 0)
+        return;
+
+    // CASE 3: If node A is previous of node B
+    if (a->next == b) {
+        a->previous->next = b;
+        b->next->previous = a;
+
+        b->previous = a->previous;
+        a->next = b->next;
+
+        b->next = a;
+        a->previous = b;
+
+    // CASE 4: If node B is previous of node A
+    } else if (b->next == a) {
+        b->previous->next = a;
+        a->next->previous = b;
+
+        a->previous = b->previous;
+        b->next = a->next;
+
+        a->next = b;
+        b->previous = a;
+
+    } else {
+        DLink<T> *p, *q, *r;
+
+        p = a->previous;
+        q = a->next;
+        r = b->previous;
+
+        a->previous = b->previous;
+        a->next = b->next;
+        b->previous = p;
+        b->next = q;
+
+        if (a->next != 0)
+            a->next->previous = a;
+        if (a->previous != 0)
+            a->previous->next = a;
+        if (b->next != 0)
+            b->next->previous = b;
+        if (b->previous != 0)
+            b->previous->next = b;
+    }
 }
 
 #endif

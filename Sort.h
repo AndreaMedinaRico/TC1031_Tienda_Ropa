@@ -1,73 +1,48 @@
+/*
+* Sort.h
+* By: Andrea Medina Rico
+* 22.11.23
+* versio: 4
+* Sort algorithm 
+*/
+
 #ifndef SORT_H_
 #define SORT_H_
 
-#include "Ropa.h"
-
-// Merge Sort para ordenar por precio
+// MERGE SORT
 template <class T>
 class Sort {
-    private:
-        void copyArray(std::vector<Ropa> &A, std::vector<Ropa> &B, int low, int high);
-        void mergeArrayPre(std::vector<Ropa> &A, std::vector<Ropa> &B, int low, int mid, int high);
-        void mergeSplit(std::vector<Ropa> &A, std::vector<Ropa> &B, int low, int high);
     public:
-        std::vector<Ropa> mergeSort(const std::vector<Ropa> &arr);
+        DList<T> selectionSort(DList<T> &arr);
 };
 
 template <class T>
-void Sort<T>::copyArray(std::vector<Ropa> &A, std::vector<Ropa> &B, int low, int high) {
-    for (int i = low; i <= high; i++) 
-        A[i] = B[i];
-}
+DList<T> Sort<T>::selectionSort(DList<T> &arr) {
+    DList<T> sorted;
+    DLink<T> *temp = arr.head;
+    DLink<T> *min = arr.head;
+    DLink<T> *temp2 = arr.head;
+    int size = arr.size;
 
-template <class T> 
-void Sort<T>::mergeArrayPre(std::vector<Ropa> &A, std::vector<Ropa> &B, int low, int mid, int high) {
-    int i = low;        // Low A
-    int j = mid + 1;    // Segunda mitad A
-    int k = low;        // Low B
-
-    while (i <= mid && j  <= high) {
-        if (A[i].getPrecio() < A[j].getPrecio()) {
-            B[k] = A[i];
-            i++;
-        } else {
-            B[k] = A[j];
-            j++;
+    for (int i = 0; i < size; i++) {
+        while (temp != 0) {
+            if (temp->value < min->value) {
+                min = temp;
+            }
+            temp = temp->next;
         }
-        k++;
+        sorted.add(min->value);
+        temp2 = arr.head;
+        while (temp2 != 0) {
+            if (temp2->value == min->value) {
+                arr.remove(temp2->value); // value
+            }
+            temp2 = temp2->next;
+        }
+        temp = arr.head;
+        min = arr.head;
     }
-    if (i > mid) {
-		for (; j <= high; j++) {
-			B[k++] = A[j];
-		}
-	} else {
-		for (; i <= mid; i++) {
-			B[k++] = A[i];
-		}
-	}
-}
-
-template <class T>
-void Sort<T>::mergeSplit(std::vector<Ropa> &A, std::vector<Ropa> &B, int low, int high) {
-    int mid;
-
-    if ( (high - low) < 1)
-        return;
-    
-    mid = (high + low) / 2;
-    mergeSplit(A, B, low, mid);
-	mergeSplit(A, B, mid + 1, high);
-	mergeArrayPre(A, B, low, mid, high);
-	copyArray(A, B, low, high);
-}
-
-template <class T>
-std::vector<Ropa> Sort<T>::mergeSort(const std::vector<Ropa> &arr) {
-    std::vector<Ropa> v(arr);
-    std::vector<Ropa> temp(arr.size());
-
-    mergeSplit(v, temp, 0, arr.size() - 1);
-    return v;
+    return sorted;
 }
 
 #endif
