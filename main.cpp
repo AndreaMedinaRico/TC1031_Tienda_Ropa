@@ -8,7 +8,6 @@
 */
 
 #include "doublelist.h"
-#include "Sort.h"
 #include "archivo.h"
 #include <iostream>
 #include <string>
