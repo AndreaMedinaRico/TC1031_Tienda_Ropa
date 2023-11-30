@@ -64,14 +64,17 @@ class DList {
         void addFirst(T);
         void add(T);
 
-        int find(T) const;
+        bool find(T) const;
         void removeFirst();
         void removeLast();
         void remove(T);
 
         std::string toString() const;
+        std::string toStringBackward() const;
+        std::string toStringA() const;
 
         void swap(DLink<T>*, DLink<T>*);
+        void bubbleSort();
 
         friend class Sort<T>;
 };
@@ -157,7 +160,7 @@ void DList<T>::add(T val)  {
 }
 
 template <class T>
-int DList<T>::find(T val) const {
+bool DList<T>::find(T val) const {
     int pos = 0;
     int pos2 = size;
     DLink<T> *p, *q;
@@ -166,16 +169,16 @@ int DList<T>::find(T val) const {
     q = tail;
     while (p != 0 && q != 0) {
         if (p->value == val) {
-            return pos;
+            return true;
         } else if (q->value == val) {
-            return pos2;
+            return true;
         }
         p = p->next;
         q = q->previous;
         pos++;
         pos2--;
     }
-    return -1;  // Not found
+    return false;  // Not found
 }
 
 template <class T>
@@ -255,6 +258,20 @@ std::string DList<T>::toString() const {
         return ss.str();
 }
 
+template <class T> 
+std::string DList<T>::toStringA() const {
+    std::stringstream ss;
+    DLink<T>* temp = head;
+    int i = 1;
+    while (temp) {
+        T val = temp->value;
+        ss << i << ". " << val << "\n";
+        temp = temp->next;
+        i++;
+    }
+    return ss.str();
+}
+
 template <class T>
 void DList<T>::swap(DLink<T> *a, DLink<T> *b) {
     // CASE 1: a and b are the same
@@ -308,6 +325,45 @@ void DList<T>::swap(DLink<T> *a, DLink<T> *b) {
         if (b->previous != 0)
             b->previous->next = b;
     }
+}
+
+template <class T>
+void DList<T>::bubbleSort() {
+    if (head == NULL || head->next == NULL) {
+        return; 
+    }
+
+    bool swapped;
+    do {
+        swapped = false;
+        DLink<T>* prev = NULL;
+        DLink<T>* current = head;
+        DLink<T>* next = head->next;
+
+        while (next != NULL) {
+            if (current->value > next->value) {
+                if (prev == NULL) {
+                    head = next;
+                } else {
+                    prev->next = next;
+                }
+                current->next = next->next;
+                current->previous = next; ///
+                next->next = current;
+                next->previous = prev; ///
+                swapped = true;
+                current = next;
+                next = current->next;
+            }
+
+            prev = current;
+            current = next;
+            if (next == NULL) 
+                next = NULL;
+            else 
+                next = next->next;
+        }
+    } while (swapped);
 }
 
 #endif
