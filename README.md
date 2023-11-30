@@ -5,8 +5,8 @@ Este proyecto busca que el usuario pueda tener acceso a las tallas disponibles d
 
 ## SICT0301: Evalúa los componentes
 ### Análisis de Complejidad correcto para algoritmo de ordenamiento
-Complejidad de ordenamiento: 0(n log(n) )
-Esta complejidad se debe a que el algoritmo divide el arreglo cada vez a la mitad y va ordenando las mitades que generó. Este proceso, conforme pasa el tiempo, permite que el arreglo sea ordenado más rápido que si fuera solo lineal. Esta parte se representa con el log(n). Sin embargo, el código no sólo se va dividiendo, sino que también une las partes divididas en un solo arreglo en una complejidad 0(n).
+Complejidad de ordenamiento: Ω(n)
+Esta es la complejidad del bubble sort en el mejor de los casos. Se toma este como ejemplo debido a que las listas doblemente ligadas de artículos de ropa no tienen muchos elementos (números), así que no se acercarían al peor de los casos. 
 
 ### Análisis de Complejidad correcto para estructuras de datos
 Complejidad: 0(n) / 0(n/2)
